@@ -4,26 +4,22 @@ const app = express();
 const PORT = process.env.PORT || 3030;
 const ninetyDaysInSeconds = 90 * 24 * 60 * 60; // 90 days in seconds
 
-// Use helmet.middlewares
-app.use(helmet.hidePoweredBy());
-app.use(helmet.frameguard({ action: 'deny' }));
-app.use(helmet.xssFilter());
-app.use(helmet.noSniff());
-app.use(helmet.ieNoOpen());
+// helmet.middlewares
 app.use(
-  helmet.hsts({
-    maxAge: ninetyDaysInSeconds,
-    force: true
-  })
-);
-app.use(helmet.dnsPrefetchControl());
-app.use(helmet.noCache());
-app.use(
-  helmet.contentSecurityPolicy({
-    directives: {
-      defaultSrc: ["'self'"],
-      scriptSrc: ["'self'", 'trusted-cdn.com']
+  helmet({
+    frameguard: { action: 'deny' },
+    hsts: {
+      maxAge: ninetyDaysInSeconds,
+      force: true
+    },
+    contentSecurityPolicy: {
+      directives: {
+        defaultSrc: ["'self'"],
+        scriptSrc: ["'self'", 'trusted-cdn.com']
+     
+      }
     }
+
   })
 );
 
