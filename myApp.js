@@ -6,6 +6,7 @@ const PORT = process.env.PORT || 3030;
 // Use helmet.middlewares
 app.use(helmet.hidePoweredBy());
 app.use(helmet.frameguard({ action: 'deny' }));
+app.use(helmet.xssFilter());
 
 // Your other code...
 
